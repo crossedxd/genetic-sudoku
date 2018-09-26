@@ -16,12 +16,12 @@ class Sudoku:
     def get_row(self, row):
         ''' Returns the values of a given row in the grid. '''
         self.validate_index(row)
-        return [self.get_cell(row, col) for col in range(self.SIZE)]
+        return [self.grid[row][col] for col in range(self.SIZE)]
 
     def get_column(self, col):
         ''' Returns the values of a given column in the grid. '''
         self.validate_index(col)
-        return [self.get_cell(row, col) for row in range(self.SIZE)]
+        return [self.grid[row][col] for row in range(self.SIZE)]
 
     def get_box_containing(self, row, col):
         ''' Returns the values of the box containing cell(row, col) in the grid. '''
@@ -32,7 +32,7 @@ class Sudoku:
         box = []
         for sub_row in range(box_row, box_row + self.BOX_SIZE):
             for sub_col in range(box_col, box_col + self.BOX_SIZE):
-                box.append(self.get_cell(sub_row, sub_col))
+                box.append(self.grid[sub_row][sub_col])
         return box
 
     def get_cell(self, row, col):
