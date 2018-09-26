@@ -41,6 +41,15 @@ class Sudoku:
         self.validate_index(col)
         return self.grid[row][col]
 
+    def set_cell(self, row, col, value):
+        ''' Sets the value in the grid at(row, col) coordinates to the given value. '''
+        self.validate_index(row)
+        self.validate_index(col)
+        if value not in range(1, self.SIZE + 1):
+            raise ValueError('value must be equal to or between %s and %s (was %s)' %
+                             (min(range(1, self.SIZE + 1)), max(range(1, self.SIZE + 1)), value))
+        self.grid[row][col] = value
+
     def get_string(self):
         ''' Returns the grid as a single row in string form. '''
         return ''.join([''.join(map(str, i)) for i in self.grid])
