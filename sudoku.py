@@ -2,7 +2,6 @@ import math
 
 
 class Sudoku:
-
     SIZE = 9
     BOX_SIZE = int(math.sqrt(SIZE))
     INDICES = range(SIZE)
