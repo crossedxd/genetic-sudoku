@@ -54,6 +54,19 @@ class Sudoku:
         """ Returns the grid as a single line in string form. """
         return ''.join([''.join(map(str, i)) for i in self.grid])
 
+    def get_as_list(self):
+        """ Returns the grid as a single line in list form. """
+        list_repr = []
+        for row in self.grid:
+            list_repr.extend(row)
+        return list_repr
+
+    def recreate_from_list(self, list_repr):
+        """ Recreates the grid from a given list representation. """
+        self.grid = []
+        for i in range(self.SIZE):
+            self.grid.append(list_repr[i:i + self.SIZE])
+
     def validate_index(self, index):
         """ Raises an IndexError if index isn't valid, i.e. doesn't fall within range(SIZE). """
         if index not in self.INDICES:
