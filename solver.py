@@ -41,14 +41,7 @@ def count_total_duplicates(puzzle):
 
 def count_total_blanks(puzzle):
     """ Returns a total count of blank values in a given puzzle. """
-    total_blanks = 0
-    for i in range(puzzle.SIZE):
-        total_blanks += count_blanks(puzzle.get_row(i))
-        total_blanks += count_blanks(puzzle.get_column(i))
-        total_blanks += count_blanks(puzzle.get_box_containing(
-            math.floor(i / puzzle.BOX_SIZE) * puzzle.BOX_SIZE,
-            i % puzzle.BOX_SIZE * puzzle.BOX_SIZE))
-    return total_blanks
+    return sum([count_blanks(puzzle.get_row(i)) for i in range(puzzle.SIZE)])
 
 
 def count_duplicates(cells):
@@ -95,4 +88,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    pass#main()
