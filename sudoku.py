@@ -65,7 +65,7 @@ class Sudoku:
         """ Recreates the grid from a given list representation. """
         self.grid = []
         for i in range(self.SIZE):
-            self.grid.append(list_repr[i:i + self.SIZE])
+            self.grid.append(list_repr[i * self.SIZE:i * self.SIZE + self.SIZE])
 
     def validate_index(self, index):
         """ Raises an IndexError if index isn't valid, i.e. doesn't fall within range(SIZE). """
