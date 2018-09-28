@@ -50,8 +50,8 @@ class Sudoku:
                              (min(range(1, self.SIZE + 1)), max(range(1, self.SIZE + 1)), value))
         self.grid[row][col] = value
 
-    def get_string(self):
-        """ Returns the grid as a single row in string form. """
+    def get_string_repr(self):
+        """ Returns the grid in string form as a single line. """
         return ''.join([''.join(map(str, i)) for i in self.grid])
 
     def validate_index(self, index):

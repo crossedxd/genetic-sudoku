@@ -80,9 +80,9 @@ class TestSudokuMethods(unittest.TestCase):
         self.assertEqual(self.PARTIAL_SUDOKU.get_cell(7, 0), 0)
         self.assertEqual(self.PARTIAL_SUDOKU.get_cell(8, 0), 0)
 
-    def test_get_string(self):
-        """ Performs unit tests for the Sudoku.get_string() method. """
-        self.assertEqual(self.PARTIAL_SUDOKU.get_string(), '530070000600195000098000060' +
+    def test_get_string_repr(self):
+        """ Performs unit tests for the Sudoku.get_string_repr() method. """
+        self.assertEqual(self.PARTIAL_SUDOKU.get_string_repr(), '530070000600195000098000060' +
                          '800060003400803001700020006060000280000419005000080079')
 
     def test_set_cell(self):
