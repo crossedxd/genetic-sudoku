@@ -51,7 +51,7 @@ class Sudoku:
         self.grid[row][col] = value
 
     def get_string_repr(self):
-        """ Returns the grid in string form as a single line. """
+        """ Returns the grid as a single line in string form. """
         return ''.join([''.join(map(str, i)) for i in self.grid])
 
     def validate_index(self, index):
