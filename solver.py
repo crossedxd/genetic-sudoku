@@ -33,7 +33,8 @@ def count_total_duplicates(puzzle):
         total_duplicates += count_duplicates(puzzle.get_row(i))
         total_duplicates += count_duplicates(puzzle.get_column(i))
         total_duplicates += count_duplicates(puzzle.get_box_containing(
-            math.floor(i / puzzle.BOX_SIZE), i % puzzle.BOX_SIZE))
+            math.floor(i / puzzle.BOX_SIZE) * puzzle.BOX_SIZE,
+            i % puzzle.BOX_SIZE) * puzzle.BOX_SIZE)
     return total_duplicates * PENALTY_DUPLICATES
 
 
@@ -44,7 +45,8 @@ def count_total_blanks(puzzle):
         total_blanks += count_blanks(puzzle.get_row(i))
         total_blanks += count_blanks(puzzle.get_column(i))
         total_blanks += count_blanks(puzzle.get_box_containing(
-            math.floor(i / puzzle.BOX_SIZE), i % puzzle.BOX_SIZE))
+            math.floor(i / puzzle.BOX_SIZE) * puzzle.BOX_SIZE,
+            i % puzzle.BOX_SIZE) * puzzle.BOX_SIZE)
     return total_blanks * PENALTY_BLANKS
 
 
