@@ -72,3 +72,13 @@ class Sudoku:
         if index not in self.INDICES:
             raise IndexError('index must be equal to or between %s and %s (was %s)' %
                              (min(range(self.SIZE)), max(range(self.SIZE)), index))
+
+    def get_possible_values(self, row, col):
+        """ Returns a list of possible values for a given cell. """
+        if self.get_cell(row, col) != 0:
+            return []
+        return list(
+            {i for i in range(self.SIZE + 1)} -
+            set(self.get_row(row)) -
+            set(self.get_column(col)) -
+            set(self.get_box_containing(row, col)))
