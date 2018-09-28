@@ -7,6 +7,7 @@ from deap import base
 from deap import creator
 from deap import tools
 from sudoku import Sudoku
+import pprint
 
 PENALTY_DUPLICATES = 100
 PENALTY_BLANKS = 1
@@ -21,8 +22,8 @@ def evaluate(list_repr):
     """ Returns the fitness of a given puzzle. """
     FITNESS_MODEL.recreate_from_list(list_repr)
     fitness = 0
-    fitness -= count_total_duplicates(FITNESS_MODEL)
-    fitness -= count_total_blanks(FITNESS_MODEL)
+    fitness -= count_total_duplicates(FITNESS_MODEL) * PENALTY_DUPLICATES
+    fitness -= count_total_blanks(FITNESS_MODEL) * PENALTY_BLANKS
     return fitness,
 
 
@@ -34,8 +35,8 @@ def count_total_duplicates(puzzle):
         total_duplicates += count_duplicates(puzzle.get_column(i))
         total_duplicates += count_duplicates(puzzle.get_box_containing(
             math.floor(i / puzzle.BOX_SIZE) * puzzle.BOX_SIZE,
-            i % puzzle.BOX_SIZE) * puzzle.BOX_SIZE)
-    return total_duplicates * PENALTY_DUPLICATES
+            i % puzzle.BOX_SIZE * puzzle.BOX_SIZE))
+    return total_duplicates
 
 
 def count_total_blanks(puzzle):
@@ -46,8 +47,8 @@ def count_total_blanks(puzzle):
         total_blanks += count_blanks(puzzle.get_column(i))
         total_blanks += count_blanks(puzzle.get_box_containing(
             math.floor(i / puzzle.BOX_SIZE) * puzzle.BOX_SIZE,
-            i % puzzle.BOX_SIZE) * puzzle.BOX_SIZE)
-    return total_blanks * PENALTY_BLANKS
+            i % puzzle.BOX_SIZE * puzzle.BOX_SIZE))
+    return total_blanks
 
 
 def count_duplicates(cells):
@@ -87,7 +88,9 @@ def main():
     pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=100, stats=stats,
                                    halloffame=hof, verbose=True)
 
-    print(hof)
+    winner = Sudoku()
+    winner.recreate_from_list(hof[0])
+    pprint.pprint(winner.grid)
     return pop, log, hof
 
 
