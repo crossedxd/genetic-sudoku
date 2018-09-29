@@ -1,15 +1,13 @@
 import math
 import random
-from deap import algorithms
-import numpy
-from deap import base
-from deap import creator
-from deap import tools
-from sudoku import Sudoku
 import pprint
+import numpy
+from deap import base, creator, tools, algorithms
+from sudoku import Sudoku
 
 PENALTY_DUPLICATES = 100
 PENALTY_BLANKS = 1
+PENALTY_NO_VALUES = 100
 
 POPULATION_SIZE = 1000
 MUTATION_RATE = 0.05
@@ -22,7 +20,13 @@ def evaluate(list_repr):
     FITNESS_MODEL.recreate_from_list(list_repr)
     fitness = 0
     fitness -= count_total_duplicates(FITNESS_MODEL) * PENALTY_DUPLICATES
-    fitness -= count_total_blanks(FITNESS_MODEL) * PENALTY_BLANKS
+    # fitness -= count_total_blanks(FITNESS_MODEL) * PENALTY_BLANKS
+    for row in range(FITNESS_MODEL.SIZE):
+        for col in range(FITNESS_MODEL.SIZE):
+            if FITNESS_MODEL.get_cell(row, col) == 0:
+                fitness -= PENALTY_BLANKS
+                if not FITNESS_MODEL.get_possible_values(row, col):
+                    fitness -= PENALTY_NO_VALUES
     return fitness,
 
 
