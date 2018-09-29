@@ -1,6 +1,5 @@
 import math
 import random
-from collections import Counter
 from deap import algorithms
 import numpy
 from deap import base
@@ -46,8 +45,8 @@ def count_total_blanks(puzzle):
 
 def count_duplicates(cells):
     """ Returns a count of duplicate values in the given list of cells (excluding blanks). """
-    counts = Counter(cells)
-    return sum([counts[i] for i in counts if counts[i] > 1 and i != 0])
+    excluding_blanks = [i for i in cells if i != 0]
+    return len(excluding_blanks) - len(set(excluding_blanks))
 
 
 def count_blanks(cells):
@@ -88,4 +87,4 @@ def main():
 
 
 if __name__ == '__main__':
-    pass#main()
+    main()
