@@ -82,3 +82,12 @@ class Sudoku:
             set(self.get_row(row)) -
             set(self.get_column(col)) -
             set(self.get_box_containing(row, col)))
+
+    def get_empty_cells(self):
+        """ Returns a list of coordinates of all empty cells on the grid. """
+        empty_cells = []
+        for row in range(self.SIZE):
+            for col in range(self.SIZE):
+                if not self.get_cell(row, col):
+                    empty_cells.append((row, col))
+        return empty_cells
