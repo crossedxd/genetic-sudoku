@@ -14,20 +14,36 @@ class NaiveSolver:
     def solve(self, puzzle: Sudoku):
         changed = True
         while changed:
+            possible_values = [[puzzle.get_possible_values(row, col) for col in puzzle.INDICES]
+                               for row in puzzle.INDICES]
             changed = False
-            for row in range(puzzle.SIZE):
-                for col in range(puzzle.SIZE):
-                    '''
-                    TODO: the naive solver needs to grab possible values for each blank in a
-                    row/col/cell and then check for any numbers that only occur once.  If found,
-                    they're a part of the solution.
-                    '''
-                    possible_values = puzzle.get_possible_values(row, col)
-                    print('%s, %s: %s' % (row, col, possible_values))
-                    if len(possible_values) == 1:
-                        print('setting cell to %s' % (possible_values[0]))
-                        puzzle.set_cell(row, col, possible_values[0])
+            # Perform an initial pass for any cells with only one possible value
+            for row in puzzle.INDICES:
+                for col in puzzle.INDICES:
+                    if len(possible_values[row][col]) == 1:
+                        puzzle.set_cell(row, col, possible_values[row][col][0])
                         changed = True
+            # Perform a second sweep for cells with unique values
+            empty_cells = puzzle.get_empty_cells()
+            for row, col in empty_cells:
+                cell_values = set(possible_values[row][col])
+                for r in puzzle.INDICES:
+                    if r != row:
+                        cell_values -= set(possible_values[r][col])
+                        cell_values -= {puzzle.get_cell(r, col)}
+                for c in puzzle.INDICES:
+                    if c != col:
+                        cell_values -= set(possible_values[row][c])
+                        cell_values -= {puzzle.get_cell(row, c)}
+                box_row = math.floor(row / puzzle.BOX_SIZE) * puzzle.BOX_SIZE
+                box_col = math.floor(col / puzzle.BOX_SIZE) * puzzle.BOX_SIZE
+                for r in range(box_row, box_row + puzzle.BOX_SIZE):
+                    for c in range(box_col, box_col + puzzle.BOX_SIZE):
+                        cell_values -= set(possible_values[r][c])
+                        cell_values -= {puzzle.get_cell(r, c)}
+                if len(cell_values) == 1:
+                    puzzle.set_cell(row, col, list(cell_values)[0])
+                    changed = True
         return puzzle
 
 
