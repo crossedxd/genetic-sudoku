@@ -25,24 +25,24 @@ class NaiveSolver:
                         changed = True
             # Perform a second sweep for cells with unique values
             empty_cells = puzzle.get_empty_cells()
-            for row, col in empty_cells:
-                cell_values = set(possible_values[row][col])
-                for r in puzzle.INDICES:
-                    if r != row:
-                        cell_values -= set(possible_values[r][col])
-                        cell_values -= {puzzle.get_cell(r, col)}
-                for c in puzzle.INDICES:
-                    if c != col:
-                        cell_values -= set(possible_values[row][c])
-                        cell_values -= {puzzle.get_cell(row, c)}
-                box_row = math.floor(row / puzzle.BOX_SIZE) * puzzle.BOX_SIZE
-                box_col = math.floor(col / puzzle.BOX_SIZE) * puzzle.BOX_SIZE
-                for r in range(box_row, box_row + puzzle.BOX_SIZE):
-                    for c in range(box_col, box_col + puzzle.BOX_SIZE):
-                        cell_values -= set(possible_values[r][c])
-                        cell_values -= {puzzle.get_cell(r, c)}
+            for master_row, master_col in empty_cells:
+                cell_values = set(possible_values[master_row][master_col])
+                for row in puzzle.INDICES:
+                    if row != master_row:
+                        cell_values -= set(possible_values[row][master_col])
+                        cell_values -= {puzzle.get_cell(row, master_col)}
+                for col in puzzle.INDICES:
+                    if col != master_col:
+                        cell_values -= set(possible_values[master_row][col])
+                        cell_values -= {puzzle.get_cell(master_row, col)}
+                box_row = math.floor(master_row / puzzle.BOX_SIZE) * puzzle.BOX_SIZE
+                box_col = math.floor(master_col / puzzle.BOX_SIZE) * puzzle.BOX_SIZE
+                for row in range(box_row, box_row + puzzle.BOX_SIZE):
+                    for col in range(box_col, box_col + puzzle.BOX_SIZE):
+                        cell_values -= set(possible_values[row][col])
+                        cell_values -= {puzzle.get_cell(row, col)}
                 if len(cell_values) == 1:
-                    puzzle.set_cell(row, col, list(cell_values)[0])
+                    puzzle.set_cell(master_row, master_col, list(cell_values)[0])
                     changed = True
         return puzzle
 
