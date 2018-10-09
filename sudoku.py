@@ -75,6 +75,8 @@ class Sudoku:
 
     def get_possible_values(self, row, col):
         """ Returns a list of possible values for a given cell. """
+        self.validate_index(row)
+        self.validate_index(col)
         if self.get_cell(row, col) != 0:
             return []
         return list(
